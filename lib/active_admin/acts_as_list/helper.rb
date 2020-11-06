@@ -5,7 +5,7 @@ module ActiveAdmin
       #
       # Example:
       #
-      # #app/admin/players.rb
+      # # app/admin/players.rb
       #
       #  ActiveAdmin.register Player do
       #    index do
@@ -32,13 +32,12 @@ module ActiveAdmin
         end
       end
 
-
       # Call this inside your resource definition to add the needed member actions
       # for your sortable resource.
       #
       # Example:
       #
-      # #app/admin/players.rb
+      # # app/admin/players.rb
       #
       #  ActiveAdmin.register Player do
       #    # Sort players by position
@@ -48,7 +47,7 @@ module ActiveAdmin
       #    sortable_member_actions
       #  end
       def sortable_member_actions
-       member_action :move_to_top do
+        member_action :move_to_top do
           if resource.first?
             redirect_to :back, :notice => I18n.t('acts_as_list.illegal_move_to_top', :resource => resource_class.to_s.camelize.constantize.model_name.human )
             return
