@@ -47,37 +47,61 @@ module ActiveAdmin
       def sortable_member_actions
         member_action :move_to_top do
           if resource.first?
-            redirect_to :back, :notice => I18n.t('acts_as_list.illegal_move_to_top', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.illegal_move_to_top', resource: resource_class.to_s.camelize.constantize.model_name.human)
           else
             resource.move_to_top
-            redirect_to :back, :notice => I18n.t('acts_as_list.moved_to_top', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.moved_to_top', resource: resource_class.to_s.camelize.constantize.model_name.human)
+          end
+
+          if Rails::VERSION::MAJOR >= 5
+            redirect_back fallback_location: resource_path, notice: redirect_notice
+          else
+            redirect_to :back, notice: redirect_notice
           end
         end
 
         member_action :move_to_bottom do
           if resource.last?
-            redirect_to :back, :notice => I18n.t('acts_as_list.illegal_move_to_bottom', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.illegal_move_to_bottom', resource: resource_class.to_s.camelize.constantize.model_name.human)
           else
             resource.move_to_bottom
-            redirect_to :back, :notice => I18n.t('acts_as_list.moved_to_bottom', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.moved_to_bottom', resource: resource_class.to_s.camelize.constantize.model_name.human)
+          end
+
+          if Rails::VERSION::MAJOR >= 5
+            redirect_back fallback_location: resource_path, notice: redirect_notice
+          else
+            redirect_to :back, notice: redirect_notice
           end
         end
 
         member_action :move_up do
           if resource.first?
-            redirect_to :back, :notice => I18n.t('acts_as_list.illegal_move_up', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.illegal_move_up', resource: resource_class.to_s.camelize.constantize.model_name.human)
           else
             resource.move_higher
-            redirect_to :back, :notice => I18n.t('acts_as_list.moved_up', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.moved_up', resource: resource_class.to_s.camelize.constantize.model_name.human)
+          end
+
+          if Rails::VERSION::MAJOR >= 5
+            redirect_back fallback_location: resource_path, notice: redirect_notice
+          else
+            redirect_to :back, notice: redirect_notice
           end
         end
 
         member_action :move_down do
           if resource.last?
-            redirect_to :back, :notice => I18n.t('acts_as_list.illegal_move_down', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.illegal_move_down', resource: resource_class.to_s.camelize.constantize.model_name.human)
           else
             resource.move_lower
-            redirect_to :back, :notice => I18n.t('acts_as_list.moved_down', :resource => resource_class.to_s.camelize.constantize.model_name.human )
+            redirect_notice = I18n.t('acts_as_list.moved_down', resource: resource_class.to_s.camelize.constantize.model_name.human)
+          end
+
+          if Rails::VERSION::MAJOR >= 5
+            redirect_back fallback_location: resource_path, notice: redirect_notice
+          else
+            redirect_to :back, notice: redirect_notice
           end
         end
       end
