@@ -10,25 +10,23 @@ module ActiveAdmin
       #  ActiveAdmin.register Player do
       #    index do
       #      # This adds columns for moving up, down, top and bottom.
-      #      sortable_columns
+      #      sortable_column
       #      #...
       #      column :firstname
       #      column :lastname
       #      default_actions
       #    end
       #  end
-      def sortable_columns
-        column "&#9650;&#9650;".html_safe do |resource|
-          link_to("&#9650;&#9650;".html_safe, self.send(:"move_to_top_admin_#{resource.class.model_name.to_s.underscore.gsub("/", "_")}_path", resource), :class => "arrow") unless resource.first?
-        end
-        column "&#9650;".html_safe do |resource|
-          link_to("&#9650;".html_safe, self.send(:"move_up_admin_#{resource.class.model_name.to_s.underscore.gsub("/", "_")}_path", resource), :class => "arrow") unless resource.first?
-        end
-        column "&#9660;".html_safe do |resource|
-          link_to("&#9660;".html_safe, self.send(:"move_down_admin_#{resource.class.model_name.to_s.underscore.gsub("/", "_")}_path", resource), :class => "arrow") unless resource.last?
-        end
-        column "&#9660;&#9660;".html_safe do |resource|
-          link_to("&#9660;&#9660;".html_safe, self.send(:"move_to_bottom_admin_#{resource.class.model_name.to_s.underscore.gsub("/", "_")}_path", resource), :class => "arrow") unless resource.last?
+      def sortable_column
+        column '' do |resource|
+          actions = ActiveSupport::SafeBuffer.new
+
+          actions << link_to("&#8648;&nbsp;".html_safe, "#{resource_path(resource)}/move_to_top"), style: 'font-size: 20pt; text-decoration: none;') unless resource.first?
+          actions << link_to("&#8639;&nbsp;".html_safe, "#{resource_path(resource)}/move_up"), style: 'font-size: 20pt; text-decoration: none;') unless resource.first?
+          actions << link_to("&#8643;&nbsp;".html_safe, "#{resource_path(resource)}/move_down"), style: 'font-size: 20pt; text-decoration: none;') unless resource.last?
+          actions << link_to("&#8650;&nbsp;".html_safe, "#{resource_path(resource)}/move_to_bottom"), style: 'font-size: 20pt; text-decoration: none;') unless resource.last?
+
+          actions
         end
       end
 
