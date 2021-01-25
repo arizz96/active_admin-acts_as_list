@@ -17,24 +17,26 @@ module ActiveAdmin
       #      default_actions
       #    end
       #  end
-      def sortable_column
+      # @param [Proc] base_path if given will override resource path (useful for nested resources)s
+      def sortable_column(base_path: nil)
         column '' do |resource|
           actions = ActiveSupport::SafeBuffer.new
+          sortable_path = base_path.present? ? base_path.call(resource) : resource_path(resource)
 
           unless resource.first?
-            actions << link_to("&#8648;".html_safe, "#{resource_path(resource)}/move_to_top", style: 'font-size: 20pt; text-decoration: none;')
+            actions << link_to("&#8648;".html_safe, "#{sortable_path}/move_to_top", style: 'font-size: 20pt; text-decoration: none;')
             actions << text_node(' ')
           end
           unless resource.first?
-            actions << link_to("&#8639;".html_safe, "#{resource_path(resource)}/move_up", style: 'font-size: 20pt; text-decoration: none;')
+            actions << link_to("&#8639;".html_safe, "#{sortable_path}/move_up", style: 'font-size: 20pt; text-decoration: none;')
             actions << text_node(' ')
           end
           unless resource.last?
-            actions << link_to("&#8643;".html_safe, "#{resource_path(resource)}/move_down", style: 'font-size: 20pt; text-decoration: none;')
+            actions << link_to("&#8643;".html_safe, "#{sortable_path}/move_down", style: 'font-size: 20pt; text-decoration: none;')
             actions << text_node(' ')
           end
           unless resource.last?
-            actions << link_to("&#8650;".html_safe, "#{resource_path(resource)}/move_to_bottom", style: 'font-size: 20pt; text-decoration: none;')
+            actions << link_to("&#8650;".html_safe, "#{sortable_path}/move_to_bottom", style: 'font-size: 20pt; text-decoration: none;')
             actions << text_node(' ')
           end
 
